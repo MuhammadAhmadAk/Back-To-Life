@@ -6,4 +6,7 @@ const rehabRouter = Router();
 rehabRouter.post("/createRehabCenter", RehabCenterController.createRehabCenter);
 rehabRouter.get("/getAllRehabCenter", RehabCenterController.getAllRehabcenters);
 rehabRouter.get("/getRehabCenter/:id", RehabCenterController.getRehabcenterById);
+rehabRouter.put("/updateRehabCenter/:id", RehabCenterController.updateRehabcenterbyid);
+rehabRouter.delete("/deleteRehabCenter/:id", RehabCenterController.deleteRehabcenterbyid);
+
 export default rehabRouter;

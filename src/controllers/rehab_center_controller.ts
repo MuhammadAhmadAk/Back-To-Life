@@ -34,11 +34,10 @@ export class RehabCenterController {
 
     static getRehabcenterById = asyncHandler(async (req: Request, res: Response) => {
         try {
-            const id = req.params.id; // Assuming ID is passed as a route parameter
-            validateId(id);
+            const { id } = req.params; // Assuming ID is passed as a route parameter
             const center = await RehabCenter.findOne({ id: id }, { _id: 0 });
             if (!center) {
-                throw new Error(`Rehab center is Not found`);
+                res.status(404).json({ message: `Rehab center is Not found` });
             } else {
                 res.json({ center });
             }
@@ -47,4 +46,32 @@ export class RehabCenterController {
         }
     });
 
+    static updateRehabcenterbyid = asyncHandler(async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            const updateRehabcenter = await RehabCenter.findOneAndUpdate({ id: id }, req.body, {
+                new: true,
+                select: '-_id'
+            });
+
+            res.json({ rehabcenter: updateRehabcenter });
+
+        } catch (error) {
+            throw new Error(`${error}`);
+        }
+    });
+    static deleteRehabcenterbyid = asyncHandler(async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            const center = await RehabCenter.findOneAndDelete({ id: id });
+            res.json({
+                status: true,
+                message: "center Deleted Successfully",
+                rehab_center: center
+
+            })
+        } catch (error) {
+            throw new Error(`${error}`);
+        }
+    });
 }

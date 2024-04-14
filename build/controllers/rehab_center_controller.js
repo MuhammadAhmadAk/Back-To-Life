@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RehabCenterController = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const rehabcenter_model_1 = __importDefault(require("../models/rehabcenter_model"));
-const validate_id_1 = __importDefault(require("../Utils/validate_id"));
 class RehabCenterController {
     static createRehabCenter = (0, express_async_handler_1.default)(async (req, res) => {
         try {
@@ -38,8 +37,7 @@ class RehabCenterController {
     });
     static getRehabcenterById = (0, express_async_handler_1.default)(async (req, res) => {
         try {
-            const id = req.params.id; // Assuming ID is passed as a route parameter
-            (0, validate_id_1.default)(id);
+            const { id } = req.params; // Assuming ID is passed as a route parameter
             const center = await rehabcenter_model_1.default.findOne({ id: id }, { _id: 0 });
             if (!center) {
                 throw new Error(`Rehab center is Not found`);
